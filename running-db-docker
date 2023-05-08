@@ -1,0 +1,1 @@
+docker run --name hackathon -e MYSQL_ROOT_PASSWORD= -e MYSQL_DATABASE=hackathon -e MYSQL_USER= -e MYSQL_PASSWORD= -d mysql:tag
