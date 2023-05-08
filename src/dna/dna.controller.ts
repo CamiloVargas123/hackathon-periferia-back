@@ -3,9 +3,8 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
-  Post,
   NotFoundException,
+  Param,
 } from '@nestjs/common';
 import { DnaEntity } from './dna.entity';
 import { DnaDto } from './dna.interface';
@@ -25,7 +24,7 @@ export class DnaController {
     if (!result) throw new NotFoundException();
     return result;
   }
-  @Post()
+
   async addOne(@Body() stat: DnaDto): Promise<DnaEntity> {
     return await this.dnaService.add(stat);
   }
