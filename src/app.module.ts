@@ -1,19 +1,17 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmConfigAsync } from './config/typeorm.config';
 import { MutantModule } from './mutant/mutant.module';
 import { StatsModule } from './stats/stats.module';
+
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'sql9.freesqldatabase.com',
-      port: 3306,
-      username: 'sql9616790',
-      password: '5P2yHkrkmc',
-      database: 'sql9616790',
-      entities: [__dirname + '/../**/*.entity.js'],
-      synchronize: true,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: '.env',
     }),
+    TypeOrmModule.forRootAsync(TypeOrmConfigAsync),
     MutantModule,
     StatsModule,
   ],
