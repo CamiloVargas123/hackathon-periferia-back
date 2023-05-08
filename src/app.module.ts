@@ -1,10 +1,24 @@
 import { Module } from '@nestjs/common';
-import { MutantService } from './mutant/mutant.service';
-import { MutantController } from './mutant/mutant.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { MutantModule } from './mutant/mutant.module';
+import { StatsModule } from './stats/stats.module';
 
 @Module({
-  imports: [],
-  controllers: [MutantController],
-  providers: [MutantService],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: '',
+      database: 'hackathon',
+      entities: [__dirname + '/../**/*.entity.js'],
+      synchronize: true,
+    }),
+    MutantModule,
+    StatsModule,
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
