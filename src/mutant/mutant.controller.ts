@@ -2,7 +2,6 @@ import {
   Body,
   Controller,
   ForbiddenException,
-  Get,
   HttpCode,
   HttpStatus,
   Post,
@@ -14,10 +13,6 @@ import { MutantService } from './mutant.service';
 @Controller('mutant')
 export class MutantController {
   constructor(private mutantService: MutantService) {}
-  @Get()
-  ping() {
-    return this.mutantService.ping();
-  }
 
   @Post()
   @HttpCode(HttpStatus.OK)

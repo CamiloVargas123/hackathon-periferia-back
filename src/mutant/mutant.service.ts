@@ -77,8 +77,4 @@ export class MutantService {
 
     return allMutants.length > 1;
   }
-
-  ping() {
-    return 'ping pong...';
-  }
 }
