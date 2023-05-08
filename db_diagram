@@ -1,0 +1,6 @@
+Table dna {
+  id string
+  isMutant boolean
+}
+
+https://dbdiagram.io/d
