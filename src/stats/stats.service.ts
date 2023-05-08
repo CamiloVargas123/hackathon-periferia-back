@@ -8,14 +8,17 @@ export class StatsService {
 
   async getInfo(): Promise<StatDto> {
     const data = new StatDto();
-    data.count_human_dna = await this.dnaRepository.getCount({ isHuman: true });
-    data.count_mutant_dna = await this.dnaRepository.getCount({
-      isHuman: false,
+    data.count_human_dna = await this.dnaRepository.getCount({
+      isMutant: false,
     });
-    data.ratio =
-      data.count_mutant_dna === 0
-        ? data.count_human_dna
-        : data.count_human_dna / data.count_mutant_dna;
+    data.count_mutant_dna = await this.dnaRepository.getCount({
+      isMutant: true,
+    });
+    data.ratio = Boolean(
+      data.count_mutant_dna === 0 || data.count_human_dna === 0,
+    )
+      ? 0
+      : data.count_human_dna / data.count_mutant_dna;
     return data;
   }
 }

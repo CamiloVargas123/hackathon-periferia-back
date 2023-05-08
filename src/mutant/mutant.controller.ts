@@ -16,8 +16,8 @@ export class MutantController {
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  validMutant(@Body() { dna }: ValidMutantDto) {
-    const isMutatnt = this.mutantService.validMutant({ dna });
+  async validMutant(@Body() { dna }: ValidMutantDto) {
+    const isMutatnt = await this.mutantService.validMutant({ dna });
     if (!isMutatnt) throw new ForbiddenException();
   }
 }

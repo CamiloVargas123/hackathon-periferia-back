@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { ValidMutantDto } from './dto/mutant.dto';
+import { DnaService } from 'src/dna/dna.service';
 interface Positions {
   row: number;
   column: number;
 }
 @Injectable()
 export class MutantService {
-  validMutant({ dna }: { dna: ValidMutantDto['dna'] }): boolean {
+  constructor(private readonly dnaRepository: DnaService) {}
+  async validMutant({ dna }: { dna: ValidMutantDto['dna'] }): Promise<boolean> {
     const rows = dna.length;
     const columns = dna[0].length;
     const sequencieLength = 4;
-    const allMutants: Array<Positions[]> = [];
+    const allSequencies: Array<Positions[]> = [];
 
     for (let i = 0; i < rows; i++) {
       for (let j = 0; j < columns; j++) {
@@ -34,7 +36,7 @@ export class MutantService {
           const positions: Positions[] = new Array(sequencieLength)
             .fill(undefined)
             .map((_, i) => ({ row: row + i, column }));
-          allMutants.push(positions);
+          allSequencies.push(positions);
           row += sequencieLength;
         }
       }
@@ -53,7 +55,7 @@ export class MutantService {
           const positions: Positions[] = new Array(sequencieLength)
             .fill(undefined)
             .map((_, i) => ({ row: row, column: column + i }));
-          allMutants.push(positions);
+          allSequencies.push(positions);
           column += sequencieLength;
         }
       }
@@ -71,10 +73,15 @@ export class MutantService {
         const positions: Positions[] = new Array(sequencieLength)
           .fill(undefined)
           .map((_, i) => ({ row: row + i, column: column + i }));
-        allMutants.push(positions);
+        allSequencies.push(positions);
       }
     }
 
-    return allMutants.length > 1;
+    await this.dnaRepository.add({
+      id: dna.join(),
+      isMutant: allSequencies.length > 1,
+    });
+
+    return allSequencies.length > 1;
   }
 }

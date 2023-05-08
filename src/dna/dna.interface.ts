@@ -1,4 +1,4 @@
 export interface DnaDto {
   id: string;
-  isHuman: boolean;
+  isMutant: boolean;
 }

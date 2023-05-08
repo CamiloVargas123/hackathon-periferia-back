@@ -5,5 +5,5 @@ export class DnaEntity {
   @PrimaryColumn()
   id: string;
   @Column({ type: 'boolean', nullable: false })
-  isHuman: boolean;
+  isMutant: boolean;
 }

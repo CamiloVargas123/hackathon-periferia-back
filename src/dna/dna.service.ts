@@ -14,7 +14,7 @@ export class DnaService {
   async add(dna: DnaDto): Promise<DnaEntity> {
     const item = new DnaEntity();
     item.id = dna.id;
-    item.isHuman = dna.isHuman;
+    item.isMutant = dna.isMutant;
     const newDna = await this.dnaRepository.save(item);
     return newDna;
   }
@@ -28,14 +28,14 @@ export class DnaService {
     await this.dnaRepository.delete({ id });
   }
   async getCount({
-    isHuman,
+    isMutant,
   }: {
-    isHuman: DnaEntity['isHuman'];
+    isMutant: DnaEntity['isMutant'];
   }): Promise<number> {
     return this.dnaRepository
       .createQueryBuilder()
       .select('COUNT(*)')
-      .where({ isHuman })
+      .where({ isMutant })
       .getCount();
   }
 }
